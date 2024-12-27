@@ -12,7 +12,7 @@ class GetAnswerUseCase @Inject constructor(
     private val repository: QnARepository
 ) {
 
-    operator fun invoke(question: String): Flow<Resource<String>> = flow {
+    suspend operator fun invoke(question: String): Flow<Resource<String>> = flow {
         try {
             emit(Resource.Loading<String>())
             val response = repository.askQuestion(question)

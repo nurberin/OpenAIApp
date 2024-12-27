@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
@@ -27,6 +28,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.openaiapplication.R
 import com.example.openaiapplication.presentation.components.TextBubble
 import com.example.openaiapplication.util.Screen
 
@@ -41,10 +43,10 @@ fun AskQuestionScreen(
 
     LaunchedEffect(key1 = viewModel.event.value) {
         val value = viewModel.event.value
-        if (value == "An error occured") {
+        if (value ==  context.getString(R.string.txt_error)) {
             Toast.makeText(context, value, Toast.LENGTH_LONG).show()
             navController.navigateUp()
-        } else if (value != "Loading" && value != "") {
+        } else if (value != context.getString(R.string.txt_loading) && value != "") {
             navController.navigate(Screen.QnaScreen.route + "/id=${value}")
         }
     }
@@ -52,7 +54,7 @@ fun AskQuestionScreen(
     Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         TextBubble(fromUser = false, text = "Hello, how can I help you?")
 
-        if (viewModel.event.value == "Loading") {
+        if (viewModel.event.value == context.getString(R.string.txt_loading)) {
             TextBubble(fromUser = true, text = viewModel.question.value)
             Spacer(modifier = Modifier.height(16.dp))
             CircularProgressIndicator(color = Color.Black)
@@ -64,7 +66,7 @@ fun AskQuestionScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    androidx.compose.material.TextField(
+                    TextField(
                         value = viewModel.question.value,
                         onValueChange = viewModel::onQuestionChanged,
                         Modifier
@@ -76,7 +78,7 @@ fun AskQuestionScreen(
                         }
                     )
                     Icon(imageVector = Icons.Default.Send, contentDescription = "Send",
-                        modifier = Modifier.clickable(enabled = viewModel.event.value != "Loading" && viewModel.question.value.isNotBlank()) {
+                        modifier = Modifier.clickable(enabled = viewModel.event.value != context.getString(R.string.txt_loading) && viewModel.question.value.isNotBlank()) {
                             viewModel.onAsk()
                             focus.clearFocus()
                         })
