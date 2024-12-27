@@ -25,7 +25,7 @@ object AppModule {
     @Provides
     @Singleton
     fun provideQnADatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, QnADatabase::class.java, Constants.DATABASE_NAME)
+        Room.databaseBuilder(context, QnADatabase::class.java, Constants.DATABASE_NAME).build()
 
     @Provides
     @Singleton

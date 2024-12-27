@@ -3,8 +3,10 @@ package com.example.openaiapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -21,7 +23,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             OpenAIApplicationTheme {
-                Navigation()
+                Column() {
+                    TopAppBar() {
+                        Text(text = "Android OpenAI Assistant")
+                    }
+                    Navigation()
+                }
             }
         }
     }
